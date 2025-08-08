@@ -12,7 +12,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def start(msg: types.Message):
-    await msg.answer("Привет! Напиши, зачем хочешь вступить в группу.")
+    await msg.answer("Привет! Напиши + ")
 
 @dp.message_handler()
 async def collect_request(msg: types.Message):
@@ -22,7 +22,7 @@ async def collect_request(msg: types.Message):
     )
     text = f"📩 Заявка от @{msg.from_user.username or msg.from_user.first_name}:\n\n{msg.text}"
     await bot.send_message(MODERATOR_ID, text, reply_markup=kb)
-    await msg.answer("Спасибо! Ваша заявка отправлена на модерацию.")
+    await msg.answer("Спасибо! Ваша заявка отправлена на модерацию./Thank you! Your application has been sent for review.")
 
 @dp.callback_query_handler(lambda c: c.data.startswith('accept_') or c.data.startswith('reject_'))
 async def callback_handler(call: types.CallbackQuery):
@@ -36,12 +36,12 @@ async def callback_handler(call: types.CallbackQuery):
             creates_join_request=False
         )
         join_button = InlineKeyboardMarkup().add(
-            InlineKeyboardButton("🚪 Вступить", url=invite.invite_link)
+            InlineKeyboardButton("🚪 Вступить/Join", url=invite.invite_link)
         )
-        await bot.send_message(user_id, "✅ Ваша заявка одобрена.", reply_markup=join_button)
+        await bot.send_message(user_id, "✅ Ваша заявка одобрена./Your application has been approved.", reply_markup=join_button)
         await call.answer("Пользователь принят.")
     else:
-        await bot.send_message(user_id, "❌ Ваша заявка отклонена.")
+        await bot.send_message(user_id, "❌ Ваша заявка отклонена./Your application has been rejected.")
         await call.answer("Пользователь отклонён.")
 
 if __name__ == "__main__":
