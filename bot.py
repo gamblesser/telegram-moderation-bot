@@ -12,7 +12,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def start(msg: types.Message):
-    await msg.answer("Привет! Напиши + ")
+    await msg.answer("Привет! Напиши +/Hi! Type +")
 
 @dp.message_handler()
 async def collect_request(msg: types.Message):
